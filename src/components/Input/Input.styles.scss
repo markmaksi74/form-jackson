@@ -1,0 +1,72 @@
+$--color-default: grey;
+$--color-invalid: red;
+$--color-valid: green;
+$--color-focus: blue;
+
+.formInput {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+
+  .formInput__label {
+    font-size: 1.2rem;
+    color: rgb(0, 0, 0);
+  }
+
+  .formInput__input {
+    padding: 15px;
+    margin: 10px 0px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    border-color: var($--color-default) !important;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    // input in focus state
+    &:focus {
+      outline: none !important;
+      border: 1px solid #719ece;
+      box-shadow: 0 0 10px #719ece;
+    }
+
+    // when the input field is empty
+    &:focus:invalid {
+      outline: none !important;
+      border: 1px solid var($--color-default) !important;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+    }
+  }
+}
+
+.formInput__error-message {
+  color: $--color-invalid;
+  margin-top: 1px;
+}
+
+.formInput--valid {
+  outline: none !important;
+  border: 1px solid #0ae60a;
+}
+
+.formInput--invalid:focus {
+  outline: none !important;
+  border: 1px solid var($--color-invalid) !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+}
+
+.formInput--hidden {
+  display: none;
+}
+
+.button {
+  width: 250px;
+  padding: 0.4rem;
+  border-radius: 10px;
+}
+
+.button--primary {
+  background: #0676d8;
+  color: whitesmoke;
+}
