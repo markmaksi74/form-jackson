@@ -28,8 +28,6 @@ export const Input = () => {
       (prevValues) => (prevValues = { ...formValues, [name]: value })
     );
     setFormErrors((prevErrs) => (prevErrs = validate(formValues)));
-    console.log('formValues are: ', formValues);
-    console.log('formErrors are: ', formErrors);
   };
 
   const validate = (updatedFormValues) => {
