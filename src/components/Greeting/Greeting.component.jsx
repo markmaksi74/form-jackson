@@ -7,7 +7,7 @@ function Greeting() {
   const {inputValue, isSubmit} = useContext(InputContext);
   return (
     <div
-      className={`greetingInput ${isSubmit ? '' : 'greeting--hidden'}`}
+      className={`greeting ${isSubmit ? '' : 'greeting--hidden'}`}
     >{`Hello ${inputValue}`}</div>
   );
 }
