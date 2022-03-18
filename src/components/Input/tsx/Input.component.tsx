@@ -47,7 +47,7 @@ const Input: React.FC = () => {
   return (
     <div className="container">
       {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <div className="ui message success">Signed in successfully</div>
+        <div className="ui message success">Welcome!</div>
       ) : (
         <pre>{JSON.stringify(formValues, undefined, 1)}</pre>
       )}
