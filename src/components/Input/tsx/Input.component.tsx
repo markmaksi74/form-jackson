@@ -59,7 +59,7 @@ const Input: React.FC = () => {
       >
         <div className="form">
           <div className="formInput">
-            <label>First Name</label>
+            <label>Name</label>
             <input
               ref={textInputRef}
               className={`${isValid ? 'valid' : 'invalid'} `}
