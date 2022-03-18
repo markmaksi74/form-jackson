@@ -33,7 +33,7 @@ export const Input = () => {
   const validate = (updatedFormValues) => {
     const errors = {};
     if (!updatedFormValues.inputValue) {
-      errors.inputValue = 'First Name is required!';
+      errors.inputValue = 'Name is required!';
     } else if (updatedFormValues.inputValue.length > 5) {
       errors.inputValue = 'Input field cannot exceed 150 characters';
     }
