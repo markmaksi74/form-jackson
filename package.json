@@ -1,5 +1,5 @@
 {
-  "name": "Greeting with SCSS & TypeScript",
+  "name": "greeting-with-scss-and-typescript",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",

@@ -3,25 +3,35 @@
 --isSubmit becomes true only when isValid is true
 */
 
-import { useState, createContext } from 'react';
+import React, { useState, createContext } from 'react';
 import './Input.styles.scss';
 import Greeting from '../Greeting/Greeting.component';
 import "../../../images/circle-exclamation-solid.svg"
 
-export const InputContext = createContext();
+interface FormValues {inputValue: string}
+interface FormEvent {preventDefault():void, target:{name: string, value: string}}
+interface FormValuesErrors {inputValue: string}
+interface FormErrors {inputValue: string}
 
-const defaultState = () => {
-  return { inputValue: '' };
+export const InputContext = createContext(null);
+const formValues: FormValues = { inputValue: '' }
+
+const defaultValuesState = (): FormValues => {
+  return formValues
 };
 
-export const Input = () => {
-  const [formValues, setFormValues] = useState(() => defaultState()); // default state
-  const [formErrors, setFormErrors] = useState({}); // invalid state
+const defaultErrorsState = (): FormErrors => {
+  return formValues
+};
+
+export const Input: React.FC = () => {
+  const [formValues, setFormValues] = useState(() => defaultValuesState()); // default state
+  const [formErrors, setFormErrors] = useState(() => defaultErrorsState()); // invalid state
   const [isSubmit, setSubmit] = useState(false); // submitted state
   const [isValid, setValid] = useState(false); // valid state
 
   // changes the formValues as the user fills the input fields
-  const handleChange = (e) => {
+  const handleChange = (e: FormEvent) => {
     const { name, value } = e.target;
     // we spread the defaultState to preserve all the defaultState values
     setFormValues(
@@ -30,8 +40,8 @@ export const Input = () => {
     setFormErrors((prevErrs) => (prevErrs = validate(formValues)));
   };
 
-  const validate = (updatedFormValues) => {
-    const errors = {};
+  const validate = (updatedFormValues: FormValues): FormValuesErrors => {
+    const errors:FormValuesErrors = {inputValue: ''};
     if (!updatedFormValues.inputValue) {
       errors.inputValue = 'Name is required!';
     } else if (updatedFormValues.inputValue.length > 5) {
@@ -41,7 +51,7 @@ export const Input = () => {
     return errors; // changes the empty formErrors to "errors" object
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault(); // prevents refresh
     // updated defaultState is validated
     // return of validate() is the new state of formErrors
@@ -81,3 +91,4 @@ export const Input = () => {
 };
 
 export default Input;
+
