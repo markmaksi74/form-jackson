@@ -8,10 +8,25 @@ import './Input.styles.scss';
 import Greeting from '../Greeting/Greeting.component';
 import "../../../images/circle-exclamation-solid.svg"
 
-interface FormValues {inputValue: string}
-interface FormEvent {preventDefault():void, target:{name: string, value: string}}
-interface FormValuesErrors {inputValue: string}
-interface FormErrors {inputValue: string}
+interface FormValues {
+  inputValue: string
+}
+
+interface FormEvent {
+  preventDefault(): void,
+  target: {
+    name: string,
+    value: string
+  }
+}
+
+interface FormValuesErrors {
+  inputValue: string
+}
+
+interface FormErrors {
+  inputValue: string
+}
 
 export const InputContext = createContext(null);
 const formValues: FormValues = { inputValue: '' }
