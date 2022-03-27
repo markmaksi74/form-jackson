@@ -71,7 +71,7 @@ export const Input: React.FC = () => {
     // updated defaultState is validated
     // return of validate() is the new state of formErrors
     setFormErrors(validate(formValues));
-    isValid ? setSubmit(true) : setSubmit(false);
+    setSubmit(!!isValid);
   };
 
   let context = { inputValue: formValues.inputValue , isSubmit };
