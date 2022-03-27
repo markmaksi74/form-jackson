@@ -52,7 +52,7 @@ export const Input: React.FC = () => {
     setFormValues(
       (prevValues) => (prevValues = { ...formValues, [name]: value })
     );
-    setFormErrors((prevErrs) => (prevErrs = validate(formValues)));
+    setFormErrors(validate(formValues));
   };
 
   const validate = (updatedFormValues: FormValues): FormValuesErrors => {
