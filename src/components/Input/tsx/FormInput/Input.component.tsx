@@ -42,7 +42,7 @@ const defaultErrorsState = (): FormErrors => {
 export const Input: React.FC = () => {
   const [formValues, setFormValues] = useState(() => defaultValuesState()); // default state
   const [formErrors, setFormErrors] = useState(() => defaultErrorsState()); // invalid state
-  const [isSubmit, setSubmit] = useState(false); // submitted state
+  const [isSubmitted, setSubmit] = useState(false); // submitted state
   const [isValid, setValid] = useState(false); // valid state
 
   // changes the formValues as the user fills the input fields
