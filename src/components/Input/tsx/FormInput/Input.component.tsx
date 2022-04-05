@@ -7,17 +7,10 @@ import React, { useState, createContext } from 'react';
 import './Input.styles.scss';
 import Greeting from '../Greeting/Greeting.component';
 import "../../../images/circle-exclamation-solid.svg"
+import { FormEventHandler, FormEvent } from 'react';
 
 interface FormValues {
   inputValue: string
-}
-
-interface FormEvent {
-  preventDefault(): void,
-  target: {
-    name: string,
-    value: string
-  }
 }
 
 interface FormValuesErrors {
@@ -66,7 +59,7 @@ export const Input: React.FC = () => {
     return errors; // changes the empty formErrors to "errors" object
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // prevents refresh
     // updated defaultState is validated
     // return of validate() is the new state of formErrors
@@ -74,12 +67,12 @@ export const Input: React.FC = () => {
     setSubmit(!!isValid);
   };
 
-  let context = { inputValue: formValues.inputValue , isSubmit };
+  let context = { inputValue: formValues.inputValue , isSubmitted };
 
   return (
     <>
       <form
-        className={`formInput ${isSubmit ? 'formInput--hidden' : ''}`}
+        className={`formInput ${isSubmitted ? 'formInput--hidden' : ''}`}
         onSubmit={handleSubmit}
         autoComplete="off"
       >

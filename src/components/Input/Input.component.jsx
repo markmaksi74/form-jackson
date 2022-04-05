@@ -3,15 +3,15 @@
 --isSubmit becomes true only when isValid is true
 */
 
-import { useState, createContext } from 'react';
-import './Input.styles.scss';
-import Greeting from '../Greeting/Greeting.component';
-import "../../../images/circle-exclamation-solid.svg"
+import { useState, createContext } from "react";
+import "./Input.styles.scss";
+import Greeting from "../Greeting/Greeting.component";
+import "../../../images/circle-exclamation-solid.svg";
 
 export const InputContext = createContext();
 
 const defaultState = () => {
-  return { inputValue: '' };
+  return { inputValue: "" };
 };
 
 export const Input = () => {
@@ -27,17 +27,17 @@ export const Input = () => {
     setFormValues(
       (prevValues) => (prevValues = { ...formValues, [name]: value })
     );
-    setFormErrors((prevErrs) => (prevErrs = validate(formValues)));
+    setFormErrors(validate(formValues));
   };
 
   const validate = (updatedFormValues) => {
     const errors = {};
-    if (!updatedFormValues.inputValue) {
-      errors.inputValue = 'Name is required!';
+    if (updatedFormValues.inputValue.length === 0) {
+      errors.inputValue = "Name is required!";
     } else if (updatedFormValues.inputValue.length > 5) {
-      errors.inputValue = 'Input field cannot exceed 150 characters';
+      errors.inputValue = "Input field cannot exceed 150 characters";
     }
-    setValid(true);
+    setValid(false);
     return errors; // changes the empty formErrors to "errors" object
   };
 
@@ -49,20 +49,34 @@ export const Input = () => {
     isValid ? setSubmit(true) : setSubmit(false);
   };
 
-  let context = { inputValue: formValues.inputValue , isSubmit };
+  let context = { inputValue: formValues.inputValue, isSubmit };
 
   return (
     <>
       <form
-        className={`formInput ${isSubmit ? 'formInput--hidden' : ''}`}
+        className={`formInput ${isSubmit ? "formInput--hidden" : ""}`}
         onSubmit={handleSubmit}
         autoComplete="off"
       >
-        <label className="formInput__label">Name</label>
+        <label
+          className={`${
+            formValues.inputValue.length === 0 ||
+            formValues.inputValue.length < 5
+              ? ""
+              : "formInput--invalidLabel"
+          } formInput__label `}
+        >
+          Name
+        </label>
         <input
           className={`${
-            isValid ? 'formInput--valid' : 'formInput--invalid'
-          } formInput__input `}
+            formValues.inputValue.length > 0 && formValues.inputValue.length < 5
+              ? "formInput--validInput"
+              : ""
+          }
+          ${formValues.inputValue.length >= 5 ? "formInput--invalidInput" : ""}
+          ${formValues.inputValue.length === 0 ? "formInput--defaultInput" : ""}
+          formInput__input`}
           required
           type="text"
           name="inputValue"

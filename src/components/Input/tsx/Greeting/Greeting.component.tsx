@@ -3,7 +3,7 @@ import { InputContext } from '../Input/Input.component';
 import './Greeting.styles.scss';
 
 export const Greeting: React.FC = () => {
-  const {inputValue, isSubmit} = useContext(InputContext);
+  const {inputValue , isSubmit} = useContext(InputContext);
   return (
     <div
       className={`greeting ${isSubmit ? '' : 'greeting--hidden'}`}
