@@ -3,43 +3,43 @@
 --isSubmit becomes true only when isValid is true
 */
 
-import React, { useState, createContext } from 'react';
-import './Input.styles.scss';
-import Greeting from '../Greeting/Greeting.component';
-import "../../../images/circle-exclamation-solid.svg"
+import React, { useState, createContext } from "react";
+import "./Input.styles.scss";
+import Greeting from "../Greeting/Greeting.component";
+import "../../../images/circle-exclamation-solid.svg";
 
 interface FormValues {
-  inputValue: string
+  inputValue: string;
 }
 
 interface FormEvent {
-  preventDefault(): void,
+  preventDefault(): void;
   target: {
-    name: string,
-    value: string
-  }
+    name: string;
+    value: string;
+  };
 }
 
 interface FormValuesErrors {
-  inputValue: string
+  inputValue: string;
 }
 
 interface FormErrors {
-  inputValue: string
+  inputValue: string;
 }
 
 export const InputContext = createContext(null);
-const formValues: FormValues = { inputValue: '' }
+const formValues: FormValues = { inputValue: "" };
 
 const defaultValuesState = (): FormValues => {
-  return formValues
+  return formValues;
 };
 
 const defaultErrorsState = (): FormErrors => {
-  return formValues
+  return formValues;
 };
 
-export const Input: React.FC = () => {
+export const FormInput: React.FC = () => {
   const [formValues, setFormValues] = useState(() => defaultValuesState()); // default state
   const [formErrors, setFormErrors] = useState(() => defaultErrorsState()); // invalid state
   const [isSubmitted, setSubmit] = useState(false); // submitted state
@@ -56,17 +56,17 @@ export const Input: React.FC = () => {
   };
 
   const validate = (updatedFormValues: FormValues): FormValuesErrors => {
-    const errors:FormValuesErrors = {inputValue: ''};
+    const errors: FormValuesErrors = { inputValue: "" };
     if (!updatedFormValues.inputValue) {
-      errors.inputValue = 'Name is required!';
+      errors.inputValue = "Name is required!";
     } else if (updatedFormValues.inputValue.length > 5) {
-      errors.inputValue = 'Input field cannot exceed 150 characters';
+      errors.inputValue = "Input field cannot exceed 150 characters";
     }
     setValid(true);
     return errors; // changes the empty formErrors to "errors" object
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // prevents refresh
     // updated defaultState is validated
     // return of validate() is the new state of formErrors
@@ -74,19 +74,22 @@ export const Input: React.FC = () => {
     setSubmit(!!isValid);
   };
 
-  let context = { inputValue: formValues.inputValue , isSubmit };
+  let context: { inputValue: string; isSubmitted: boolean } = {
+    inputValue: formValues.inputValue,
+    isSubmitted,
+  };
 
   return (
     <>
       <form
-        className={`formInput ${isSubmit ? 'formInput--hidden' : ''}`}
+        className={`formInput ${isSubmitted ? "formInput--hidden" : ""}`}
         onSubmit={handleSubmit}
         autoComplete="off"
       >
         <label className="formInput__label">Name</label>
         <input
           className={`${
-            isValid ? 'formInput--valid' : 'formInput--invalid'
+            isValid ? "formInput--valid" : "formInput--invalid"
           } formInput__input `}
           required
           type="text"
@@ -105,5 +108,4 @@ export const Input: React.FC = () => {
   );
 };
 
-export default Input;
-
+export default FormInput;
