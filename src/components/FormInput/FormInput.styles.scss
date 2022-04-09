@@ -1,0 +1,74 @@
+$--color-default: #e8e7ec;
+$--color-invalid: #ED4337;
+$--color-focus: #7596bd;
+
+.formInput {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+
+  .formInput__label {
+    font-size: 1.2rem;
+  }
+
+  .formInput__input {
+    padding: 0.80rem;
+    margin: 10px 0px;
+    border-radius: 5px;
+
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    // when the input field is empty
+    &:focus:invalid {
+      outline: none !important;
+      border: 1px solid var($--color-default) !important;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+    }
+  }
+}
+
+.formInput__error-message {
+  color: $--color-invalid;
+  margin-top: 1px;
+}
+
+.formInput--defaultInput {
+  border: 1px solid $--color-default !important;
+  border-color: var($--color-default) !important;
+
+  &:focus {
+    outline: none !important;
+    border: 1px solid $--color-focus !important;
+  }
+}
+
+.formInput--validInput {
+  outline: none !important;
+  border: 1px solid $--color-focus !important;
+
+  &:focus {
+    outline: none !important;
+    border: 1px solid $--color-focus !important;
+  }
+}
+
+.formInput--invalidLabel {
+  color: $--color-invalid !important;
+}
+
+.formInput--invalidInput {
+  outline: none !important;
+  border: 1px solid $--color-invalid !important;
+
+  &:focus {
+    outline: none !important;
+    border: 1px solid $--color-invalid !important;
+  }
+}
+
+.formInput--hidden {
+  display: none;
+}

@@ -4,7 +4,7 @@
 */
 
 import React, { useState, createContext } from "react";
-import "./Input.styles.scss";
+import "./FormInput.styles.scss";
 import Greeting from "../Greeting/Greeting.component";
 import "../../../images/circle-exclamation-solid.svg";
 
@@ -12,13 +12,13 @@ interface FormValues {
   inputValue: string;
 }
 
-interface FormEvent {
-  preventDefault(): void;
-  target: {
-    name: string;
-    value: string;
-  };
-}
+// interface FormEvent {
+//   preventDefault(): void;
+//   target: {
+//     name: string;
+//     value: string;
+//   };
+// }
 
 interface FormValuesErrors {
   inputValue: string;
@@ -46,23 +46,26 @@ export const FormInput: React.FC = () => {
   const [isValid, setValid] = useState(false); // valid state
 
   // changes the formValues as the user fills the input fields
-  const handleChange = (e: FormEvent) => {
-    const { name, value } = e.target;
+  const handleChange = (e: React.FormEvent) => {
+    const { name, value } = e.target as HTMLInputElement;
+
     // we spread the defaultState to preserve all the defaultState values
     setFormValues(
       (prevValues) => (prevValues = { ...formValues, [name]: value })
-    );
+    );    
     setFormErrors(validate(formValues));
   };
 
-  const validate = (updatedFormValues: FormValues): FormValuesErrors => {
+  const validate = (formValues: FormValues): FormValuesErrors => {
     const errors: FormValuesErrors = { inputValue: "" };
-    if (!updatedFormValues.inputValue) {
-      errors.inputValue = "Name is required!";
-    } else if (updatedFormValues.inputValue.length > 5) {
+    console.log(`Validate here ${formValues.inputValue}`);
+    
+    if (formValues.inputValue.length > 5) {
       errors.inputValue = "Input field cannot exceed 150 characters";
+      setValid(false);
+    } else {
+      setValid(true);
     }
-    setValid(true);
     return errors; // changes the empty formErrors to "errors" object
   };
 
@@ -86,11 +89,25 @@ export const FormInput: React.FC = () => {
         onSubmit={handleSubmit}
         autoComplete="off"
       >
-        <label className="formInput__label">Name</label>
+        <label
+          className={`${
+            formValues.inputValue.length === 0 ||
+            formValues.inputValue.length < 5
+              ? ""
+              : "formInput--invalidLabel"
+          } formInput__label `}
+        >
+          Name
+        </label>
         <input
           className={`${
-            isValid ? "formInput--valid" : "formInput--invalid"
-          } formInput__input `}
+            formValues.inputValue.length > 0 && formValues.inputValue.length < 5
+              ? "formInput--validInput"
+              : ""
+          }
+          ${formValues.inputValue.length >= 5 ? "formInput--invalidInput" : ""}
+          ${formValues.inputValue.length === 0 ? "formInput--defaultInput" : ""}
+          formInput__input`}
           required
           type="text"
           name="inputValue"
@@ -98,7 +115,6 @@ export const FormInput: React.FC = () => {
           onChange={(e) => handleChange(e)}
         />
         <p className="formInput__error-message">{formErrors.inputValue}</p>
-        <button className="button button--primary">Submit</button>
       </form>
 
       <InputContext.Provider value={context}>
