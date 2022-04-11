@@ -1,14 +1,16 @@
-$--color-default: #e8e7ec;
-$--color-invalid: #ED4337;
-$--color-focus: #7596bd;
+$--color-default: #e9e8ed;
+$--color-invalid: #fc4f60;
+$--bg-invalid: #fff2f2;
+$--color-focus: #7193be;
 
 .formInput {
   display: flex;
   flex-direction: column;
-  width: 280px;
+  width: 218px;
 
   .formInput__label {
-    font-size: 1.2rem;
+    font-size: 0.8rem;
+    margin-bottom: -0.4rem;
   }
 
   .formInput__input {
@@ -62,6 +64,7 @@ $--color-focus: #7596bd;
 .formInput--invalidInput {
   outline: none !important;
   border: 1px solid $--color-invalid !important;
+  background-color: $--bg-invalid;
 
   &:focus {
     outline: none !important;

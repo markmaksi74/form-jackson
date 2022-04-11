@@ -49,19 +49,23 @@ export const FormInput: React.FC = () => {
   const handleChange = (e: React.FormEvent) => {
     const { name, value } = e.target as HTMLInputElement;
 
-    // we spread the defaultState to preserve all the defaultState values
     setFormValues(
       (prevValues) => (prevValues = { ...formValues, [name]: value })
-    );    
-    setFormErrors(validate(formValues));
+    );
+
+    // we spread the defaultState to preserve all the defaultState values
+    setFormErrors(validate({ ...formValues, [name]: value }));
   };
 
   const validate = (formValues: FormValues): FormValuesErrors => {
     const errors: FormValuesErrors = { inputValue: "" };
     console.log(`Validate here ${formValues.inputValue}`);
-    
-    if (formValues.inputValue.length > 5) {
+
+    if (formValues.inputValue.length > 150) {
       errors.inputValue = "Input field cannot exceed 150 characters";
+      setValid(false);
+    } else if (/[^a-zA-Z0-9]/.test(formValues.inputValue)) {
+      errors.inputValue = "non-alphanumeric characters are not allowed.";
       setValid(false);
     } else {
       setValid(true);
@@ -92,20 +96,30 @@ export const FormInput: React.FC = () => {
         <label
           className={`${
             formValues.inputValue.length === 0 ||
-            formValues.inputValue.length < 5
+            formValues.inputValue.length < 150
               ? ""
               : "formInput--invalidLabel"
-          } formInput__label `}
+          } ${
+            /[^a-zA-Z0-9]/.test(formValues.inputValue) ? "formInput--invalidLabel" : ""
+          }  formInput__label `}
         >
           Name
         </label>
         <input
           className={`${
-            formValues.inputValue.length > 0 && formValues.inputValue.length < 5
+            formValues.inputValue.length > 0 &&
+            formValues.inputValue.length < 150
               ? "formInput--validInput"
               : ""
           }
-          ${formValues.inputValue.length >= 5 ? "formInput--invalidInput" : ""}
+          ${
+            formValues.inputValue.length >= 150 ? "formInput--invalidInput" : ""
+          }
+          ${
+            /[^a-zA-Z0-9]/.test(formValues.inputValue)
+              ? "formInput--invalidInput"
+              : ""
+          } 
           ${formValues.inputValue.length === 0 ? "formInput--defaultInput" : ""}
           formInput__input`}
           required
