@@ -3,6 +3,17 @@ $--color-invalid: #fc4f60;
 $--bg-invalid: #fff2f2;
 $--color-focus: #7193be;
 
+.errorImg {
+  width: 0.9rem;
+  top: 3rem;
+  left: 13rem;
+  position: absolute;
+}
+
+.element-hidden {
+  display: none;
+}
+
 .formInput {
   display: flex;
   flex-direction: column;
@@ -73,5 +84,9 @@ $--color-focus: #7193be;
 }
 
 .formInput--hidden {
+  display: none;
+}
+
+.hidden {
   display: none;
 }

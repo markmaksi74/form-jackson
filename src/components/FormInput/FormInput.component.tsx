@@ -6,7 +6,7 @@
 import React, { useState, createContext } from "react";
 import "./FormInput.styles.scss";
 import Greeting from "../Greeting/Greeting.component";
-import "../../../images/circle-exclamation-solid.svg";
+import exclamation from "../../../images/circle-exclamation-solid.png";
 
 interface FormValues {
   inputValue: string;
@@ -43,7 +43,7 @@ export const FormInput: React.FC = () => {
   const [formValues, setFormValues] = useState(() => defaultValuesState()); // default state
   const [formErrors, setFormErrors] = useState(() => defaultErrorsState()); // invalid state
   const [isSubmitted, setSubmit] = useState(false); // submitted state
-  const [isValid, setValid] = useState(false); // valid state
+  const [isValid, setValid] = useState(true); // valid state
 
   // changes the formValues as the user fills the input fields
   const handleChange = (e: React.FormEvent) => {
@@ -105,6 +105,7 @@ export const FormInput: React.FC = () => {
         >
           Name
         </label>
+        <img  src={exclamation} className={`${isValid ? "element-hidden" : ""} errorImg`} alt="error"/>
         <input
           className={`${
             formValues.inputValue.length > 0 &&
