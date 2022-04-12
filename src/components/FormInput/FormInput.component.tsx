@@ -12,14 +12,6 @@ interface FormValues {
   inputValue: string;
 }
 
-// interface FormEvent {
-//   preventDefault(): void;
-//   target: {
-//     name: string;
-//     value: string;
-//   };
-// }
-
 interface FormValuesErrors {
   inputValue: string;
 }
