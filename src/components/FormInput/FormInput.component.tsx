@@ -49,12 +49,11 @@ export const FormInput: React.FC = () => {
   const handleChange = (e: React.FormEvent) => {
     const { name, value } = e.target as HTMLInputElement;
 
-    setFormValues(
-      (prevValues) => (prevValues = { ...formValues, [name]: value })
-    );
+    const changed = { ...formValues, [name]: value }; // Spread the default state to preserve the values
 
-    // we spread the defaultState to preserve all the defaultState values
-    setFormErrors(validate({ ...formValues, [name]: value }));
+    setFormValues(changed);
+
+    setFormErrors(validate(changed));
   };
 
   const validate = (formValues: FormValues): FormValuesErrors => {
