@@ -94,9 +94,9 @@ export const FormInput: React.FC = () => {
             /[^a-zA-Z0-9]/.test(formValues.inputValue) ? "formInput--invalidLabel" : ""
           }  formInput__label `}
         >
-          Name
+          Email Address
         </label>
-        <img  src={exclamation} className={`${isValid ? "element-hidden" : ""} errorImg`} alt="error"/>
+        <img  src={exclamation} className={`${isValid ? "element-hidden" : ""} errorIcon`} alt="error"/>
         <input
           className={`${
             formValues.inputValue.length > 0 &&

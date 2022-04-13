@@ -1,12 +1,12 @@
 $--color-default: #e9e8ed;
-$--color-invalid: #fc4f60;
+$--color-invalid: #be8b92;
 $--bg-invalid: #fff2f2;
-$--color-focus: #7193be;
+$--color-focus: #8aacce;
 
-.errorImg {
+.errorIcon {
   width: 0.9rem;
-  top: 3rem;
-  left: 13rem;
+  top: 3.05rem;
+  left: 12.9rem;
   position: absolute;
 }
 
@@ -20,8 +20,9 @@ $--color-focus: #7193be;
   width: 218px;
 
   .formInput__label {
-    font-size: 0.8rem;
-    margin-bottom: -0.4rem;
+    font-size: 0.7rem;
+    margin-bottom: -0.25rem;
+    font-family: sans-serif;
   }
 
   .formInput__input {
@@ -45,7 +46,9 @@ $--color-focus: #7193be;
 
 .formInput__error-message {
   color: $--color-invalid;
-  margin-top: 1px;
+  margin-top: -0.45rem;
+  font-family: sans-serif;
+  font-size: 0.6rem;
 }
 
 .formInput--defaultInput {
@@ -76,6 +79,7 @@ $--color-focus: #7193be;
   outline: none !important;
   border: 1px solid $--color-invalid !important;
   background-color: $--bg-invalid;
+  font-family: sans-serif;
 
   &:focus {
     outline: none !important;
