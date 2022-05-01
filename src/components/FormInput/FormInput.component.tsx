@@ -3,7 +3,7 @@
 --isSubmit becomes true only when isValid is true
 */
 
-import React, { useState, createContext } from "react";
+import React, { useState } from "react";
 import "./FormInput.styles.scss";
 import Greeting from "../Greeting/Greeting.component";
 import exclamation from "../../../images/circle-exclamation-solid.png";
