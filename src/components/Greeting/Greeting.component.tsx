@@ -1,16 +1,17 @@
 import React, { useContext } from "react";
-import { InputContext } from "../FormInput/FormInput.component";
+// import { InputContext } from "../FormInput/FormInput.component";
 import "./Greeting.styles.scss";
 
-export const Greeting: React.FC = () => {
-  const {
-    inputValue,
-    isSubmitted,
-  }: { inputValue: boolean; isSubmitted: boolean } = useContext(InputContext);
+interface FormInputProps {
+  inputValue: string;
+  isSubmitted: boolean
+}
+
+export const Greeting: React.FC <FormInputProps> = (props): JSX.Element => {
   return (
     <div
-      className={`greeting ${isSubmitted ? "" : "greeting--hidden"}`}
-    >{`Hello ${inputValue}`}</div>
+      className={`greeting ${props.isSubmitted ? "" : "greeting--hidden"}`}
+    >{`Hello ${props.inputValue}`}</div>
   );
 };
 

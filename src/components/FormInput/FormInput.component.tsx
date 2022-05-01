@@ -20,7 +20,11 @@ interface FormErrors {
   inputValue: string;
 }
 
-export const InputContext = createContext(null);
+interface GreetingMessage {
+  inputValue: string;
+  isSubmitted: boolean
+}
+
 const formValues: FormValues = { inputValue: "" };
 
 const defaultValuesState = (): FormValues => {
@@ -72,7 +76,7 @@ export const FormInput: React.FC = () => {
     setSubmit(!!isValid);
   };
 
-  let context: { inputValue: string; isSubmitted: boolean } = {
+  let greetingMessage: GreetingMessage = {
     inputValue: formValues.inputValue,
     isSubmitted,
   };
@@ -80,7 +84,7 @@ export const FormInput: React.FC = () => {
   return (
     <>
       <form
-        className={`formInput ${isSubmitted ? "formInput--hidden" : ""}`}
+        className={`form-input ${isSubmitted ? "form-input--hidden" : ""}`}
         onSubmit={handleSubmit}
         autoComplete="off"
       >
@@ -89,43 +93,51 @@ export const FormInput: React.FC = () => {
             formValues.inputValue.length === 0 ||
             formValues.inputValue.length < 150
               ? ""
-              : "formInput--invalidLabel"
+              : "form-input--invalidLabel"
           } ${
-            /[^a-zA-Z0-9]/.test(formValues.inputValue) ? "formInput--invalidLabel" : ""
-          }  formInput__label `}
+            /[^a-zA-Z0-9]/.test(formValues.inputValue)
+              ? "form-input--invalidLabel"
+              : ""
+          }  form-input__label `}
         >
-          Email Address
+          Name
         </label>
-        <img  src={exclamation} className={`${isValid ? "element-hidden" : ""} errorIcon`} alt="error"/>
+        <img
+          src={exclamation}
+          className={`icon ${isValid ? "icon--hidden" : ""} icon--error`}
+          alt="error"
+        />
         <input
           className={`${
             formValues.inputValue.length > 0 &&
             formValues.inputValue.length < 150
-              ? "formInput--validInput"
+              ? "form-input--validInput"
               : ""
           }
           ${
-            formValues.inputValue.length >= 150 ? "formInput--invalidInput" : ""
+            formValues.inputValue.length >= 150
+              ? "form-input--invalidInput"
+              : ""
           }
           ${
             /[^a-zA-Z0-9]/.test(formValues.inputValue)
-              ? "formInput--invalidInput"
+              ? "form-input--invalidInput"
               : ""
           } 
-          ${formValues.inputValue.length === 0 ? "formInput--defaultInput" : ""}
-          formInput__input`}
+          ${
+            formValues.inputValue.length === 0 ? "form-input--defaultInput" : ""
+          }
+          form-input__input`}
           required
           type="text"
           name="inputValue"
           value={formValues.inputValue}
           onChange={(e) => handleChange(e)}
         />
-        <p className="formInput__error-message">{formErrors.inputValue}</p>
+        <p className="form-input__error-message">{formErrors.inputValue}</p>
       </form>
 
-      <InputContext.Provider value={context}>
-        <Greeting />
-      </InputContext.Provider>
+      <Greeting inputValue={greetingMessage.inputValue} isSubmitted={greetingMessage.isSubmitted} />
     </>
   );
 };
