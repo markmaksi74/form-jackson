@@ -1,6 +1,5 @@
 module.exports = {
   stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
-  staticDirs: ["../public"],
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
@@ -11,7 +10,10 @@ module.exports = {
     postcss: false,
   },
   framework: "@storybook/react",
+  typescript: {
+    reactDocgen: false,
+  },
   core: {
-    builder: "webpack4",
+    builder: 'webpack5',
   },
 };
