@@ -1,0 +1,93 @@
+$--color-default: #e9e8ed;
+$--color-invalid: #be8b92;
+$--bg-invalid: #fff2f2;
+$--color-focus: #8aacce;
+
+.icon {
+  &--hidden {
+    display: none;
+  }
+
+  &--error {
+    width: 0.9rem;
+    top: 3.05rem;
+    left: 12.9rem;
+    position: absolute;
+  }
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  width: 218px;
+
+  &--defaultInput {
+    border: 1px solid $--color-default !important;
+    border-color: var($--color-default) !important;
+
+    &:focus {
+      outline: none !important;
+      border: 1px solid $--color-focus !important;
+    }
+  }
+
+  &--validInput {
+    outline: none !important;
+    border: 1px solid $--color-focus !important;
+
+    &:focus {
+      outline: none !important;
+      border: 1px solid $--color-focus !important;
+    }
+  }
+
+  &__error-message {
+    color: $--color-invalid;
+    margin-top: -0.45rem;
+    font-family: sans-serif;
+    font-size: 0.6rem;
+  }
+
+  &--invalidLabel {
+    color: $--color-invalid !important;
+  }
+
+  &--invalidInput {
+    outline: none !important;
+    border: 1px solid $--color-invalid !important;
+    background-color: $--bg-invalid;
+    font-family: sans-serif;
+
+    &:focus {
+      outline: none !important;
+      border: 1px solid $--color-invalid !important;
+    }
+  }
+
+  &__label {
+    font-size: 0.7rem;
+    margin-bottom: -0.25rem;
+    font-family: sans-serif;
+  }
+
+  &__input {
+    padding: 0.8rem;
+    margin: 10px 0px;
+    border-radius: 5px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    // when the input field is empty
+    &:focus:invalid {
+      outline: none !important;
+      border: 1px solid var($--color-default) !important;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+    }
+  }
+
+  &--hidden {
+    display: none;
+  }
+}
