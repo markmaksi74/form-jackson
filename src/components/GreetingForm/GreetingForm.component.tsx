@@ -5,7 +5,7 @@
 
 import React, { useState } from "react";
 import "./GreetingForm.styles.scss";
-import Greeting from "../Greeting/Greeting.component";
+import GreetingMessage from "../GreetingMessage/GreetingMessage.component";
 import exclamation from "../../../images/circle-exclamation-solid.png";
 
 interface FormValues {
@@ -20,7 +20,7 @@ interface FormErrors {
   inputValue: string;
 }
 
-interface GreetingMessage {
+interface Greeting {
   inputValue: string;
   isSubmitted: boolean | undefined;
 }
@@ -83,7 +83,7 @@ export const GreetingForm: React.FC = () => {
   const initialInvalidInputState =
     formValues.inputValue === "" && isSubmitted === undefined;
 
-  let greetingMessage: GreetingMessage = {
+  let greetingMessage: Greeting = {
     inputValue: formValues.inputValue,
     isSubmitted,
   };
@@ -140,7 +140,7 @@ export const GreetingForm: React.FC = () => {
         </p>
       </form>
 
-      <Greeting
+      <GreetingMessage
         inputValue={greetingMessage.inputValue}
         isSubmitted={greetingMessage.isSubmitted}
       />

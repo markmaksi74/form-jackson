@@ -1,13 +1,13 @@
 import React from "react";
 // import { InputContext } from "../FormInput/FormInput.component";
-import "./Greeting.styles.scss";
+import "./GreetingMessage.styles.scss";
 
 interface FormInputProps {
   inputValue: string;
   isSubmitted: boolean | undefined
 }
 
-export const Greeting: React.FC <FormInputProps> = (props): JSX.Element => {
+export const GreetingMessage: React.FC <FormInputProps> = (props): JSX.Element => {
   return (
     <div
       className={`greeting-message ${props.isSubmitted ? "" : "greeting-message--hidden"}`}
@@ -15,4 +15,4 @@ export const Greeting: React.FC <FormInputProps> = (props): JSX.Element => {
   );
 };
 
-export default Greeting;
+export default GreetingMessage;
