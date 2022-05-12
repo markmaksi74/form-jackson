@@ -22,7 +22,7 @@ interface FormErrors {
 
 interface GreetingMessage {
   inputValue: string;
-  isSubmitted: boolean;
+  isSubmitted: boolean | undefined;
 }
 
 const formValues: FormValues = { inputValue: "" };
@@ -40,8 +40,8 @@ const defaultErrorsState = (): FormErrors => {
 export const GreetingForm: React.FC = () => {
   const [formValues, setFormValues] = useState(() => defaultValuesState());
   const [formErrors, setFormErrors] = useState(() => defaultErrorsState());
-  const [isSubmitted, setSubmit] = useState(undefined);
-  const [isValid, setValid] = useState(undefined);
+  const [isSubmitted, setSubmit] = useState<undefined | false | true>(undefined);
+  const [isValid, setValid] = useState<undefined | false | true>(undefined);
 
   // changes the formValues as the user fills the input fields
   const handleChange = (e: React.FormEvent) => {
