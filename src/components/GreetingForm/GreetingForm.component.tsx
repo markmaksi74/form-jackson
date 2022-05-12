@@ -4,7 +4,7 @@
 */
 
 import React, { useState } from "react";
-import "./FormInput.styles.scss";
+import "./GreetingForm.styles.scss";
 import Greeting from "../Greeting/Greeting.component";
 import exclamation from "../../../images/circle-exclamation-solid.png";
 
@@ -22,59 +22,66 @@ interface FormErrors {
 
 interface GreetingMessage {
   inputValue: string;
-  isSubmitted: boolean
+  isSubmitted: boolean;
 }
 
 const formValues: FormValues = { inputValue: "" };
+
+const formErrors: FormErrors = { inputValue: "Input cannot be empty." };
 
 const defaultValuesState = (): FormValues => {
   return formValues;
 };
 
 const defaultErrorsState = (): FormErrors => {
-  return formValues;
+  return formErrors;
 };
 
-export const FormInput: React.FC = () => {
-  const [formValues, setFormValues] = useState(() => defaultValuesState()); // default state
-  const [formErrors, setFormErrors] = useState(() => defaultErrorsState()); // invalid state
-  const [isSubmitted, setSubmit] = useState(false); // submitted state
-  const [isValid, setValid] = useState(true); // valid state
+export const GreetingForm: React.FC = () => {
+  const [formValues, setFormValues] = useState(() => defaultValuesState());
+  const [formErrors, setFormErrors] = useState(() => defaultErrorsState());
+  const [isSubmitted, setSubmit] = useState(undefined);
+  const [isValid, setValid] = useState(undefined);
 
   // changes the formValues as the user fills the input fields
   const handleChange = (e: React.FormEvent) => {
     const { name, value } = e.target as HTMLInputElement;
-
-    const changed = { ...formValues, [name]: value }; // Spread the default state to preserve the values
-
+    const changed = { ...formValues, [name]: value };
     setFormValues(changed);
-
     setFormErrors(validate(changed));
   };
 
   const validate = (formValues: FormValues): FormValuesErrors => {
     const errors: FormValuesErrors = { inputValue: "" };
-    console.log(`Validate here ${formValues.inputValue}`);
 
-    if (formValues.inputValue.length > 150) {
+    if (formValues.inputValue.length > 5) {
       errors.inputValue = "Input field cannot exceed 150 characters";
       setValid(false);
     } else if (/[^a-zA-Z0-9]/.test(formValues.inputValue)) {
       errors.inputValue = "non-alphanumeric characters are not allowed.";
       setValid(false);
+    } else if (formValues.inputValue.length === 0) {
+      // this occurs when the user input something and then erases it to empty input
+      errors.inputValue = "Input cannot be empty.";
+      setValid(undefined);
     } else {
+      errors.inputValue = "";
       setValid(true);
     }
-    return errors; // changes the empty formErrors to "errors" object
+    return errors;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // prevents refresh
-    // updated defaultState is validated
-    // return of validate() is the new state of formErrors
-    setFormErrors(validate(formValues));
-    setSubmit(!!isValid);
+    e.preventDefault();
+    // formErrors.inputValue === '' ? setSubmit(undefined) : setSubmit(false);
+    isValid ? setSubmit(true) : setSubmit(false);
   };
+
+  const emptyInvalidSubmitState =
+    formValues.inputValue === "" && isSubmitted === false;
+
+  const initialInvalidInputState =
+    formValues.inputValue === "" && isSubmitted === undefined;
 
   let greetingMessage: GreetingMessage = {
     inputValue: formValues.inputValue,
@@ -84,43 +91,38 @@ export const FormInput: React.FC = () => {
   return (
     <>
       <form
-        className={`form-input ${isSubmitted ? "form-input--hidden" : ""}`}
+        className={`form-input ${
+          isSubmitted && isValid ? "form-input--hidden" : ""
+        }`}
         onSubmit={handleSubmit}
         autoComplete="off"
       >
         <label
           className={`${
-            formValues.inputValue.length === 0 ||
-            formValues.inputValue.length < 150
-              ? ""
-              : "form-input--invalidLabel"
-          } ${
-            /[^a-zA-Z0-9]/.test(formValues.inputValue)
+            isValid === false || emptyInvalidSubmitState
               ? "form-input--invalidLabel"
               : ""
-          }  form-input__label `}
+          } form-input__label `}
         >
           Name
         </label>
         <img
           src={exclamation}
-          className={`icon ${isValid ? "icon--hidden" : ""} icon--error`}
+          className={`${
+            initialInvalidInputState || isValid
+              ? "icon-error--hidden"
+              : "icon-error--show"
+          } icon-error`}
           alt="error"
         />
         <input
           className={`${
-            formValues.inputValue.length > 0 &&
-            formValues.inputValue.length < 150
+            isValid === true || emptyInvalidSubmitState
               ? "form-input--validInput"
               : ""
           }
           ${
-            formValues.inputValue.length >= 150
-              ? "form-input--invalidInput"
-              : ""
-          }
-          ${
-            /[^a-zA-Z0-9]/.test(formValues.inputValue)
+            isValid === false || emptyInvalidSubmitState
               ? "form-input--invalidInput"
               : ""
           } 
@@ -128,18 +130,22 @@ export const FormInput: React.FC = () => {
             formValues.inputValue.length === 0 ? "form-input--defaultInput" : ""
           }
           form-input__input`}
-          required
           type="text"
           name="inputValue"
           value={formValues.inputValue}
           onChange={(e) => handleChange(e)}
         />
-        <p className="form-input__error-message">{formErrors.inputValue}</p>
+        <p className="form-input__error-message">
+          {initialInvalidInputState ? "" : formErrors.inputValue}
+        </p>
       </form>
 
-      <Greeting inputValue={greetingMessage.inputValue} isSubmitted={greetingMessage.isSubmitted} />
+      <Greeting
+        inputValue={greetingMessage.inputValue}
+        isSubmitted={greetingMessage.isSubmitted}
+      />
     </>
   );
 };
 
-export default FormInput;
+export default GreetingForm;
